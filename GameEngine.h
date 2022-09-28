@@ -1,16 +1,14 @@
 
 #include <iostream>
-#include <string>;
+#include <string>
 
 using namespace std;
+
 
 class GameEngine {
     
     private:
-    string prev_state;
-    string curr_state;
-
-
+        string * curr_state;
 
     public:
         // default constructor
@@ -26,5 +24,9 @@ class GameEngine {
         //
         void startUp();
         void play();
+        void changeState(string * input);
+
+        string * getState();
+        void setState(string * new_state);
 
 };
