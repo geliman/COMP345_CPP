@@ -12,10 +12,11 @@ using std::vector;
 class Card {
   class Deck;
   class Player;
+
 public:
   Card();
   ~Card();
-
+  Card(string s);
   // assignment operator
   Card &operator=(const Card &c);
 
@@ -25,9 +26,10 @@ public:
   // Stream insertion operator
   friend ostream &operator<<(ostream &out, const Card &Card);
 
-  void play(Deck *deck, Player*p);
+  void play(Deck *deck, Player *p);
+  string *getCard();
+  void setCard(string s);
   string *card_type;
-private:
 
   // Each card has a type from: bomb, reinforcement, blockade, airlift, and
   // diplomacy.
@@ -62,9 +64,10 @@ public:
   friend ostream &operator<<(ostream &out, const Deck &Deck);
 
   // Deck will be generated with this method.
-  void genDeck();
+  vector<Card *> genDeck();
+  vector<Card *> getDeck();
+  void displayDeck();
 
-private:
   // The deck that will contain cards.
   vector<Card *> deck;
 };
