@@ -10,8 +10,9 @@ using std::string;
 using std::vector;
 
 class Card {
+  class Deck;
+  class Player;
 public:
-  void *play();
   Card();
   ~Card();
 
@@ -24,11 +25,15 @@ public:
   // Stream insertion operator
   friend ostream &operator<<(ostream &out, const Card &Card);
 
+  void play(Deck *deck, Player*p);
+
 private:
+  string *card_type;
   // Each card has a type from: bomb, reinforcement, blockade, airlift, and
   // diplomacy.
-  vector<string> type_card = {"Bomb", "Reinforcement", "Blockade", "Airlift",
-                              " Diplomacy"};
+
+  // vector<string> type_card = {"Bomb", "Reinforcement", "Blockade", "Airlift",
+  //                             " Diplomacy"};
 
   // Vector gives me a red line saying "
   // Non-aggregate type 'vector<std::string>'(aka 'vector<basic_string<char,
@@ -60,7 +65,7 @@ public:
   void genDeck();
 
 private:
-// The deck that will contain cards.
+  // The deck that will contain cards.
   vector<Card *> deck;
 };
 
