@@ -26,9 +26,9 @@ public:
   friend ostream &operator<<(ostream &out, const Card &Card);
 
   void play(Deck *deck, Player*p);
-
-private:
   string *card_type;
+private:
+
   // Each card has a type from: bomb, reinforcement, blockade, airlift, and
   // diplomacy.
 
