@@ -37,14 +37,16 @@ functions, operators).
 */
 
 #include "Cards.h"
-#include <new>
-#include <string>
-// using namespace std;
+
 using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
+string arr[20];
 
+
+// --------------------------------------------------------------------------------
+// Card
 // Default Constructor
 Card::Card() {
   // cout << "Card object" << endl;
@@ -78,112 +80,87 @@ void Card::play(Deck *d, Player *p) {
   // cout << "Player is using " << p -> hand.card_type << endl;
 }
 
+// --------------------------------------------------------------------------------
+// Deck
+
 // Default Constructor
 Deck::Deck() {
   // cout << "Deck object" << endl;
-  vector<Card *> deck;
 }
+
 Deck::~Deck() {
   // Default Destructor
 }
+
 // Copy Constructor
 Deck::Deck(const Deck &d) { this->deck = *new vector<Card *>(d.deck); }
+
 // Assignment Opeartor
 Deck &Deck ::operator=(const Deck &d) {
   this->deck = *new vector<Card *>(d.deck);
   return *this;
 }
+
 // Stream insertion operator
 std::ostream &operator<<(std::ostream &os, const Deck &d) {
   cout << "How many cards are in a deck: " << endl;
   return os << d.deck.capacity() << endl;
 }
 
-vector<Card *> Deck::getDeck() { return deck; };
 
-static vector<Card *> dd;
-vector<Card *> Deck::genDeck() {
-  int v1;
+
+void Deck::genDeck() {
+  int v1 = -1;
 
   for (int i = 0; i < 30; i++) {
     v1 = rand() % 5;
 
     if (v1 == 0) {
       string s = "Bomb";
-      Card *c1 = new Card;
-      c1->card_type = &s;
-      Card ctemp;
-      ctemp = *c1;
-      deck.push_back(&ctemp);
-      delete c1;
-      c1 = NULL;
+      Card c1;
+      c1.setCard(s);
+      deck.push_back(&c1);
     } else if (v1 == 1) {
-      string s2 = "Reinforcement";
-      Card *c2 = new Card;
-      c2->card_type = &s2;
-      Card ctemp;
-      ctemp = *c2;
-      deck.push_back(&ctemp);
-      delete c2;
-      c2 = NULL;
+      string s1 = "Reinforcement";
+      Card c2;
+      c2.setCard(s1);
+      deck.push_back(&c2);
     } else if (v1 == 2) {
-      string s3 = "Blockade";
-      Card *c3 = new Card;
-      c3->card_type = &s3;
-      Card ctemp;
-      ctemp = *c3;
-      deck.push_back(&ctemp);
-      delete c3;
-      c3 = NULL;
+      string s2 = "Blockade";
+      Card c3;
+      c3.setCard(s2);
+      deck.push_back(&c3);
     } else if (v1 == 3) {
-      string s4 = "Airlift";
-      Card *c4 = new Card;
-      c4->card_type = &s4;
-      Card ctemp;
-      ctemp = *c4;
-      deck.push_back(&ctemp);
-      delete c4;
-      c4 = NULL;
+      string s3 = "Airlift";
+      Card c4;
+      c4.setCard(s3);
+      deck.push_back(&c4);
     } else {
-      string s5 = "Diplomacy";
-      Card *c5 = new Card;
-      c5->card_type = &s5;
-      Card ctemp;
-      ctemp = *c5;
-      deck.push_back(&ctemp);
-      delete c5;
-      c5 = NULL;
+      string s4 = "Diplomacy";
+      Card c5;
+      c5.setCard(s4);
+      deck.push_back(&c5);
     }
   }
-  dd = deck;
-  for (int i = 0; i < deck.size(); i++) {
-    cout << i + 1 << ": " << string(*deck.at(i)->card_type) << endl;
-  }
 
-  cout << "Deck is Created" << endl;
-  return deck;
+  for (int i = 0; i < 20; i++) {
+    deckArr[i] = string(*deck.at(i)->card_type); 
+  }
+  
+  cout << "Deck is Generated." << endl;
 }
 
-// void displayDeck() {
-//   cout << deck.size();
-//   for (int i = 0; i < deck.size(); i++) {
-//     cout << i + 1 << ": " << string(*deck.at(i)->card_type) << endl;
-//   }
-// }
+void Deck::displayDeck( string arr[]) {
+  for (int i = 0; i < 20; i++) {
+    cout << i + 1 << " " << arr[i] << endl;
+  }
+}
 
-int main() {
+int main(){
 
-  Deck *d = new Deck();
-  Deck *de = new Deck();
-  d->genDeck();
-  cout << string(*dd.at(0)->card_type);
-
-  // cout << string(*de.at(3)->card_type);
-
-  // d->displayDeck();
-
-  // displayDeck(d);
-  // cout << string(*d->deck.at(0)->card_type);
-
-  return 0;
+  Deck d;
+  d.genDeck();
+  d.displayDeck(d.deckArr);
+  
+  return 8;
 }

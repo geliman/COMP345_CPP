@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <ostream>
-#include <string>
+
 #include <vector>
 
 using std::ostream;
@@ -64,11 +64,13 @@ public:
   friend ostream &operator<<(ostream &out, const Deck &Deck);
 
   // Deck will be generated with this method.
-  vector<Card *> genDeck();
-  vector<Card *> getDeck();
-  void displayDeck();
+  void genDeck();
+  
+  // Display the deck
+  void displayDeck(string arr[]);
 
   // The deck that will contain cards.
+  string deckArr [30];
   vector<Card *> deck;
 };
 
