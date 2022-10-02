@@ -1,49 +1,17 @@
-/**
- 1. All data members of user-defined class type must be of pointer type.
-
-no inline function
-
-4. All classes must implement a correct copy constructor, assignment operator,
-and stream insertion operator.
-
-Assignment operators
-in class
-Employee& operator =(const Employee & e);
-method
-Employee &Employee:: operator(const Employee&e){
-    this -> name = new string(*(e.name))
-    this -> num = new int(*(e.num))
-    this -> pay = new double(*(e.pay))
-    return *this;
-}
-
-copy consturtor e.g
-in class
-Employee(const Employee &e);
-method
-Employee::Employee(const Employee&e){
-    this -> name = new string(*(e.name))
-    this -> num = new int(*(e.num))
-    this -> pay = new double(*(e.pay))
-}
-
-5. Memory leaks must be avoided.
-Use delete
-~A(){};
-
-6. Code must be documented using comments (user-defined classes, methods, free
-functions, operators).
-
-*/
-
 #include "Cards.h"
+/**
+ *
+ * @author Giwon Lee - 40160453
+ * @date 2022.10.2 Tuesday
+ *
+ */
 
 using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
-string arr[20];
-
+string arr[30];
+static int dynamicDeckSize = sizeDeck;
 
 // --------------------------------------------------------------------------------
 // Card
@@ -76,9 +44,10 @@ class Deck;
 class Player;
 
 void Card::setCard(string s) { this->card_type = &s; }
-void Card::play(Deck *d, Player *p) {
-  // cout << "Player is using " << p -> hand.card_type << endl;
-}
+
+// void Card::play(Deck *d, Player *p) {
+//   // cout << "Player is using " << p -> hand.card_type << endl;
+// }
 
 // --------------------------------------------------------------------------------
 // Deck
@@ -107,60 +76,146 @@ std::ostream &operator<<(std::ostream &os, const Deck &d) {
   return os << d.deck.capacity() << endl;
 }
 
-
-
 void Deck::genDeck() {
-  int v1 = -1;
 
-  for (int i = 0; i < 30; i++) {
-    v1 = rand() % 5;
+  for (int i = 0; i < sizeDeck; i++) {
+    int v1 = rand() % 5;
 
     if (v1 == 0) {
       string s = "Bomb";
-      Card c1;
-      c1.setCard(s);
-      deck.push_back(&c1);
+      deckArr[i] = s;
     } else if (v1 == 1) {
       string s1 = "Reinforcement";
-      Card c2;
-      c2.setCard(s1);
-      deck.push_back(&c2);
+      deckArr[i] = s1;
     } else if (v1 == 2) {
       string s2 = "Blockade";
-      Card c3;
-      c3.setCard(s2);
-      deck.push_back(&c3);
+      deckArr[i] = s2;
     } else if (v1 == 3) {
       string s3 = "Airlift";
-      Card c4;
-      c4.setCard(s3);
-      deck.push_back(&c4);
+      deckArr[i] = s3;
     } else {
       string s4 = "Diplomacy";
-      Card c5;
-      c5.setCard(s4);
-      deck.push_back(&c5);
+      deckArr[i] = s4;
     }
   }
 
-  for (int i = 0; i < 20; i++) {
-    deckArr[i] = string(*deck.at(i)->card_type); 
-  }
-  
+  //   if (v1 == 0) {
+  //     string s = "Bomb";
+  //     Card c1;
+  //     c1.setCard(s);
+  //     deck.push_back(&c1);
+  //   } else if (v1 == 1) {
+  //     string s1 = "Reinforcement";
+  //     Card c2;
+  //     c2.setCard(s1);
+  //     deck.push_back(&c2);
+  //   } else if (v1 == 2) {
+  //     string s2 = "Blockade";
+  //     Card c3;
+  //     c3.setCard(s2);
+  //     deck.push_back(&c3);
+  //   } else if (v1 == 3) {
+  //     string s3 = "Airlift";
+  //     Card c4;
+  //     c4.setCard(s3);
+  //     deck.push_back(&c4);
+  //   } else {
+  //     string s4 = "Diplomacy";
+  //     Card c5;
+  //     c5.setCard(s4);
+  //     deck.push_back(&c5);
+  //   }
+  // }
+
+  // for (int i = 0; i < sizeDeck; i++) {
+  //   deckArr[i] = string(*deck.at(i)->card_type);
+  // }
+
   cout << "Deck is Generated." << endl;
 }
 
-void Deck::displayDeck( string arr[]) {
-  for (int i = 0; i < 20; i++) {
-    cout << i + 1 << " " << arr[i] << endl;
+void Deck::displayDeck(string arr[]) {
+  cout << "Deck has " << dynamicDeckSize << " cards:" << endl;
+  for (int i = 0; i < dynamicDeckSize; i++) {
+    cout << "\t" << i + 1 << ": " << arr[i] << endl;
   }
 }
 
-int main(){
+string Deck::draw() {
+  if (dynamicDeckSize == 0) {
+    cout << "Deck is empty now, you can no longer draw the cards" << endl;
+    return NULL;
+  }
+  string tempCard = deckArr[0];
 
-  Deck d;
-  d.genDeck();
-  d.displayDeck(d.deckArr);
-  
-  return 8;
+  for (int i = 0; i < dynamicDeckSize - 1; i++) {
+    deckArr[i] = deckArr[i + 1];
+  }
+
+  dynamicDeckSize--;
+  return tempCard;
+}
+
+// --------------------------------------------------------------------------------
+// Hand
+
+// Default Constructor
+Hand::Hand() {
+  // cout << "Deck object" << endl;
+}
+
+Hand::~Hand() {
+  // Default Destructor
+}
+
+// Copy Constructor
+Hand::Hand(const Hand &h) {
+  int size = sizeof(h.arrDec) / sizeof(string);
+  for (int i = 0; i < size; i++) {
+    this->arrDec[i] = h.arrDec[i];
+  }
+}
+
+// Assignment Opeartor
+Hand &Hand ::operator=(const Hand &h) {
+  int size = sizeof(h.arrDec) / sizeof(string);
+  for (int i = 0; i < size; i++) {
+    this->arrDec[i] = h.arrDec[i];
+  }
+  return *this;
+}
+static int numCardsHand = 0;
+void Hand::displayHandCards() {
+  cout << "Hand object has Cards:" << endl;
+  for (int i = 0; i < numCardsHand; i++) {
+    cout << "\t" << i + 1 << " " << arrDec[i] << endl;
+  }
+}
+
+void Hand::set_card(string s) {
+  arrDec[numCardsHand] = s;
+  numCardsHand++;
+}
+
+void Hand::displayNumOfCards() {
+  cout << "Currently has " << numCardsHand << " cards." << endl;
+}
+
+void Hand::play(Deck *deck, string s, int index) {
+  cout << "Your card is: " << s << endl;
+  return_to_Deck(deck, s);
+  arrDec[index] = "";
+  for (int i = index; i < numCardsHand; i++) {
+    if (index == numCardsHand) {
+      return;
+    }
+    arrDec[i] = arrDec[i + 1];
+  }
+  numCardsHand--;
+}
+
+void Hand::return_to_Deck(Deck *deck, string s) {
+  cout << "Deleting from hand and return back to the deck." << endl;
+  deck->deckArr[dynamicDeckSize] = s;
+  dynamicDeckSize++;
 }

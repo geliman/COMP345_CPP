@@ -2,16 +2,16 @@
 
 #include <iostream>
 #include <ostream>
-
+#include <string>
 #include <vector>
 
+using std::cin;
 using std::ostream;
 using std::string;
 using std::vector;
-
+const int sizeDeck = 30;
 class Card {
   class Deck;
-  class Player;
 
 public:
   Card();
@@ -26,7 +26,7 @@ public:
   // Stream insertion operator
   friend ostream &operator<<(ostream &out, const Card &Card);
 
-  void play(Deck *deck, Player *p);
+  // void play(Deck *deck);
   string *getCard();
   void setCard(string s);
   string *card_type;
@@ -50,7 +50,8 @@ class Deck : public Card {
   Card *card;
 
 public:
-  void *draw();
+  string draw();
+
   Deck();
   ~Deck();
   Deck(Card *card);
@@ -65,16 +66,16 @@ public:
 
   // Deck will be generated with this method.
   void genDeck();
-  
+
   // Display the deck
   void displayDeck(string arr[]);
 
   // The deck that will contain cards.
-  string deckArr [30];
+  string deckArr[sizeDeck];
   vector<Card *> deck;
 };
 
-class Hand {
+class Hand : Deck {
 
 public:
   Hand();
@@ -88,6 +89,13 @@ public:
 
   // Stream insertion operator
   friend ostream &operator<<(ostream &out, const Hand &Hand);
+
+  void set_card(string);
+  void displayNumOfCards();
+  void displayHandCards();
+  void play(Deck *deck, string s, int index);
+  void return_to_Deck(Deck *deck, string s);
+  string arrDec[sizeDeck];
 };
 
 void testCards();
