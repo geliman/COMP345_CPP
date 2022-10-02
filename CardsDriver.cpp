@@ -20,7 +20,8 @@ int main() {
     cout << "Which card do you want to play: " << endl;
     int index;
     cin >> index;
-    h.play(&d, h.arrDec[index], index);
+
+    h.play(&d, h.arrDec[index - 1], index - 1);
     break;
   }
   h.displayHandCards();

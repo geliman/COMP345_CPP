@@ -207,6 +207,7 @@ void Hand::play(Deck *deck, string s, int index) {
   arrDec[index] = "";
   for (int i = index; i < numCardsHand; i++) {
     if (index == numCardsHand) {
+      numCardsHand--;
       return;
     }
     arrDec[i] = arrDec[i + 1];
@@ -215,7 +216,8 @@ void Hand::play(Deck *deck, string s, int index) {
 }
 
 void Hand::return_to_Deck(Deck *deck, string s) {
-  cout << "Deleting from hand and return back to the deck." << endl;
+  cout << "Card  " << s << " return back to the deck." << endl;
+
   deck->deckArr[dynamicDeckSize] = s;
   dynamicDeckSize++;
 }
