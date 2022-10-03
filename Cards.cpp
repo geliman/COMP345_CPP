@@ -146,12 +146,14 @@ string Deck::draw() {
     cout << "Deck is empty now, you can no longer draw the cards" << endl;
     return NULL;
   }
-  string tempCard = deckArr[0];
+  int v1 = rand() % dynamicDeckSize;
+  cout << "At " << v1 << ": " << deckArr[v1] << endl;
+
+  string tempCard = deckArr[v1];
 
   for (int i = 0; i < dynamicDeckSize - 1; i++) {
     deckArr[i] = deckArr[i + 1];
   }
-
   dynamicDeckSize--;
   return tempCard;
 }
@@ -228,8 +230,8 @@ void testCards() {
   d.genDeck();
 
   Hand h;
-
-  for (int i = 0; i < 5; i++) {
+  int v1 = rand() % 10;
+  for (int i = 0; i < v1; i++) {
     h.set_card(d.draw());
   }
   // d.displayDeck(d.deckArr);
@@ -246,5 +248,5 @@ void testCards() {
     break;
   }
   h.displayHandCards();
-  d.displayDeck(d.deckArr);
+  // d.displayDeck(d.deckArr);
 };
