@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-using std::cin;
+
 using std::ostream;
 using std::string;
 using std::vector;
