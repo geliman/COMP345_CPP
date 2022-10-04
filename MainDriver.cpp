@@ -4,8 +4,8 @@
 #include "CardsDriver.h"
 #include "GameEngineDriver.h"
 
-void testLoadMaps();
-void testPlayers();
-void testCards();
-void testOrdersLists();
-void testGameStates();
+testLoadMaps();
+testPlayers();
+testCards();
+testOrdersLists();
+testGameStates();
