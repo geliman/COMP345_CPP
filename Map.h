@@ -1,9 +1,11 @@
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <vector>
 
-
+using namespace std;
 
 class Map
 {
@@ -16,9 +18,15 @@ public:
 		Territory();
 		Territory(string territory);
 		string getData();
-		vector<Territory> getAdjacentTerritories(Territory territory) const;
-
+		string* getOwner(); /* must change to player*/
+		int getNbArmies();
+		vector<Territory> getAdjacentTerritories();
+		int nbArmies;
+		string owner;
+		string data;
+		vector<Territory> adjTerr;
 	};
+
 	class Continent {
 	public:
 		Continent();
@@ -27,12 +35,17 @@ public:
 		
 	};
 	
-	
-	Continent getContinent(Continent continent) const;
-	int getNbContinents() const;
-	int getNbTerritories(Continent continent) const;
-	vector<string> getTerritories(Continent continent) const;
+
+
+	/*Continent getContinent(Continent continent) const;*/
+	int getNbContinents();
+	int getNbTerritories(Continent continent);
+	/*vector<string> getTerritories(Continent continent) const; */
 	
 private:
-	static bool validateMap() const; /* Safeguard here */
+	int nbTerr;
+	int nbCont;
+	string mapName;
+
+	static bool validateMap(); /* Safeguard here */
 };

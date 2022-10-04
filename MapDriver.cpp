@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 int testLoadMaps() {
@@ -61,15 +62,39 @@ int testLoadMaps() {
         }
         for (int i = 0; i < arr_cont.size(); i++) {
 
-            cout << "Continent #" << i + 1 << " : " << arr_cont.at(i).at(0) << "\n\n";
-            cout << "Points" << " : " << arr_cont.at(i).at(1) << "\n\n";
+            cout << arr_cont.at(i).at(0) << endl;
+            cout << arr_cont.at(i).at(1) << endl << endl;
             for (int j = 2; j < arr_cont.at(i).size(); j+=2) {
                 /* j = territory name; j+1 = territory properties */
-                cout << "Territory #" << j-1 << " : " << arr_cont.at(i).at(j) << "\n";
-                cout << "Territory properties :" << arr_cont.at(i).at(j+1) << "\n\n";
+                cout << arr_cont.at(i).at(j) << endl;
+                string delimiter3 = ",";
+                string name;
+                string coordX;
+                string coordY;
+                string cont;
+                vector<string> adjTerr;
+
+                string props = arr_cont.at(i).at(j + 1);
+
+                coordX = props.substr(0, props.find(delimiter3));
+                
+                props = props.substr(props.find(delimiter3)+1,props.length()-1);
+                coordY = props.substr(0, props.find(delimiter3));
+                
+                props = props.substr(props.find(delimiter3) + 1, props.length() - 1);
+                cont = props.substr(0, props.find(delimiter3));
+                
+                props = props.substr(props.find(delimiter3) + 1, props.length());
+                
+                coordX.erase(remove(coordX.begin(), coordX.end(), ' '), coordX.end());
+                coordY.erase(remove(coordY.begin(), coordY.end(), ' '), coordY.end());
+                cont.erase(remove(cont.begin(), cont.end(), ' '), cont.end());
+                
+
+                cout << coordX << ":" << coordY  << endl << "Continent : " << cont << endl << "Adjacent territories :" << props << endl << endl;
             }
             
-            cout << "\n******************************\n";
+            cout << "\n******************************" << endl;
         }
 
     }
