@@ -1,8 +1,8 @@
-//#include "MapDriver.h"
-//#include "PlayerDriver.h"
-//#include "OrdersDriver.h"
-//#include "CardsDriver.h"
-//#include "GameEngineDriver.h"
+#include "MapDriver.h"
+#include "PlayerDriver.h"
+#include "OrdersDriver.h"
+#include "CardsDriver.h"
+#include "GameEngineDriver.h"
 
 void testLoadMaps();
 void testPlayers();
