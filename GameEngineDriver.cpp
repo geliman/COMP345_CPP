@@ -2,7 +2,15 @@
 
 
 
-int main() {
+void testGameStates() {
+
+
+    // GameEngine engine1 = GameEngine();
+    // cout << engine1;
+    // GameEngine engine2 = engine1;
+    // cout << engine2;
+    // GameEngine engine3 = GameEngine(engine2);
+    // cout << engine3;
 
     GameEngine engine = GameEngine();
     string input;

@@ -3,36 +3,46 @@
 
 using namespace std;
 
-
-// bool State::check_valid_transit(string new_input) {
-//   if (state == "start") {
-//       if (new_input == "loadmap") {
-
-//       }
-//   }
-
-// }
-
+// constructor
 GameEngine::GameEngine() {
   string * str = new string("start");
-  setState(str);
+  curr_state = str;
+  cout << "State set to " << * str << endl;
 }
 
+// copy constructor
+GameEngine::GameEngine(const GameEngine& engine) {
+  this -> curr_state = new string(*(engine.curr_state));  
+}
+
+// assignment operator
+GameEngine& GameEngine::operator=(const GameEngine& engine) {
+  this -> curr_state = new string(*(engine.curr_state)); 
+  return *this;
+}
+
+// stream insertion operator
+ostream& operator<<(ostream& out, const GameEngine& GameEngine) {
+  out << "Current State is " << *GameEngine.curr_state << endl;
+	return out;
+}
+
+
+// destructor
 GameEngine::~GameEngine() {
-
+  delete curr_state;
+  curr_state = nullptr;
 }
 
-string * GameEngine::getState() {
-  return curr_state;
-}
+
 void GameEngine::setState(string * new_state) {
+  delete curr_state;
   curr_state = new_state;
   cout << "State set to " << * new_state << endl;
 }
 
-
 void GameEngine::changeState(string * input) {
-  // -------------startup-------------------  
+  // -----------------startup----------------------  
   if (*curr_state == "start") {
     if (*input == "loadmap") {
       //loadMap();
@@ -106,9 +116,6 @@ void GameEngine::changeState(string * input) {
        cout << "You have entered an invalid command" << endl;
     }
   }
-
-
-
 
 }
 
