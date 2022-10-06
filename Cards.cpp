@@ -5,6 +5,7 @@
  * @date 2022.10.2 Tuesday
  *
  */
+#include <ctime>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -13,10 +14,12 @@ using std::vector;
 string arr[30];
 static int dynamicDeckSize = sizeDeck;
 
-// --------------------------------------------------------------------------------
-// Card
+/* -------------------------------------------------------------------------------- */
+// Card Class Implementation
+
 // Default Constructor
-Card::Card() {
+Card::Card()
+{
   // cout << "Card object" << endl;
 }
 // Default Destructor
@@ -28,20 +31,25 @@ Card::Card(string s) { *card_type = s; }
 Card::Card(const Card &c) { this->card_type = new string(*(c.card_type)); }
 
 // Assignment operators
-Card &Card ::operator=(const Card &c) {
+Card &Card ::operator=(const Card &c)
+{
   this->card_type = new string(*(c.card_type));
   return *this;
 }
 
 // Stream insertion operator
-std::ostream &operator<<(std::ostream &os, const Card &c) {
+std::ostream &operator<<(std::ostream &os, const Card &c)
+{
   return os << "The card type is: " << c.card_type << endl;
 }
 
-string *Card::getCard() { return this->card_type; }
+// Returns a card type.
+string *Card::getCard()
+{
+  return this->card_type;
+}
 
 class Deck;
-class Player;
 
 void Card::setCard(string s) { this->card_type = &s; }
 
@@ -53,11 +61,13 @@ void Card::setCard(string s) { this->card_type = &s; }
 // Deck
 
 // Default Constructor
-Deck::Deck() {
+Deck::Deck()
+{
   // cout << "Deck object" << endl;
 }
 
-Deck::~Deck() {
+Deck::~Deck()
+{
   // Default Destructor
 }
 
@@ -65,188 +75,228 @@ Deck::~Deck() {
 Deck::Deck(const Deck &d) { this->deck = *new vector<Card *>(d.deck); }
 
 // Assignment Opeartor
-Deck &Deck ::operator=(const Deck &d) {
+Deck &Deck ::operator=(const Deck &d)
+{
   this->deck = *new vector<Card *>(d.deck);
+  int size = sizeof(d.arrDeck) / sizeof(string);
+  for (int i = 0; i < size; i++)
+  {
+    this->arrDeck[i] = d.arrDeck[i];
+  }
+
   return *this;
 }
 
 // Stream insertion operator
-std::ostream &operator<<(std::ostream &os, const Deck &d) {
+std::ostream &operator<<(std::ostream &os, const Deck &d)
+{
   cout << "How many cards are in a deck: " << endl;
-  return os << d.deck.capacity() << endl;
+  return os << d.deck.capacity() << " and " << d.arrDeck << endl;
 }
 
-void Deck::genDeck() {
+// The deck is generated five cards each.
+void Deck::genDeck()
+{
 
-  for (int i = 0; i < sizeDeck; i++) {
-    int v1 = rand() % 5;
+  for (int i = 0; i < sizeDeck; i++)
+  {
 
-    if (v1 == 0) {
+    if (i < 5)
+    {
       string s = "Bomb";
-      deckArr[i] = s;
-    } else if (v1 == 1) {
+      arrDeck[i] = s;
+    }
+    else if (i < 10 && i > 4)
+    {
       string s1 = "Reinforcement";
-      deckArr[i] = s1;
-    } else if (v1 == 2) {
+      arrDeck[i] = s1;
+    }
+    else if (i < 15 && i > 9)
+    {
       string s2 = "Blockade";
-      deckArr[i] = s2;
-    } else if (v1 == 3) {
+      arrDeck[i] = s2;
+    }
+    else if (i < 20 && i > 14)
+    {
       string s3 = "Airlift";
-      deckArr[i] = s3;
-    } else {
+      arrDeck[i] = s3;
+    }
+    else
+    {
       string s4 = "Diplomacy";
-      deckArr[i] = s4;
+      arrDeck[i] = s4;
     }
   }
-
-  //   if (v1 == 0) {
-  //     string s = "Bomb";
-  //     Card c1;
-  //     c1.setCard(s);
-  //     deck.push_back(&c1);
-  //   } else if (v1 == 1) {
-  //     string s1 = "Reinforcement";
-  //     Card c2;
-  //     c2.setCard(s1);
-  //     deck.push_back(&c2);
-  //   } else if (v1 == 2) {
-  //     string s2 = "Blockade";
-  //     Card c3;
-  //     c3.setCard(s2);
-  //     deck.push_back(&c3);
-  //   } else if (v1 == 3) {
-  //     string s3 = "Airlift";
-  //     Card c4;
-  //     c4.setCard(s3);
-  //     deck.push_back(&c4);
-  //   } else {
-  //     string s4 = "Diplomacy";
-  //     Card c5;
-  //     c5.setCard(s4);
-  //     deck.push_back(&c5);
-  //   }
-  // }
-
-  // for (int i = 0; i < sizeDeck; i++) {
-  //   deckArr[i] = string(*deck.at(i)->card_type);
-  // }
 
   cout << "Deck is Generated." << endl;
 }
 
-void Deck::displayDeck(string arr[]) {
+// Displays whats in the Deck.
+void Deck::displayDeck(string arr[])
+{
   cout << "Deck has " << dynamicDeckSize << " cards:" << endl;
-  for (int i = 0; i < dynamicDeckSize; i++) {
-    cout << "\t" << i + 1 << ": " << arr[i] << endl;
+  for (int i = 0; i < dynamicDeckSize; i++)
+  {
+    cout << "\t" << i + 1 << ": " << *(arr + i) << endl;
   }
 }
 
-string Deck::draw() {
-  if (dynamicDeckSize == 0) {
+/* Card draws from the deck and returns the string.
+ * Then the hand object uses this as setting its hand cards.
+ */
+string Deck::draw()
+{
+  if (dynamicDeckSize == 0)
+  {
     cout << "Deck is empty now, you can no longer draw the cards" << endl;
     return NULL;
   }
-  int v1 = rand() % dynamicDeckSize;
-  cout << "At " << v1 << ": " << deckArr[v1] << endl;
 
-  string tempCard = deckArr[v1];
+  srand(time(NULL));
 
-  for (int i = 0; i < dynamicDeckSize - 1; i++) {
-    deckArr[i] = deckArr[i + 1];
+  int v1 = (rand() % dynamicDeckSize);
+  cout << "At " << v1 << ": " << arrDeck[v1] << endl;
+
+  string tempCard = arrDeck[v1];
+
+  for (int i = 0; i < dynamicDeckSize - 1; i++)
+  {
+    arrDeck[i] = arrDeck[i + 1];
   }
   dynamicDeckSize--;
   return tempCard;
 }
 
-// --------------------------------------------------------------------------------
-// Hand
+/* -------------------------------------------------------------------------------- */
+// Hand Class implementation.
 
 // Default Constructor
-Hand::Hand() {
+Hand::Hand()
+{
   // cout << "Deck object" << endl;
 }
 
-Hand::~Hand() {
+// Default Destructor
+Hand::~Hand()
+{
   // Default Destructor
 }
 
 // Copy Constructor
-Hand::Hand(const Hand &h) {
-  int size = sizeof(h.arrDec) / sizeof(string);
-  for (int i = 0; i < size; i++) {
-    this->arrDec[i] = h.arrDec[i];
+Hand::Hand(const Hand &h)
+{
+  int size = sizeof(h.arrHand) / sizeof(string);
+  for (int i = 0; i < size; i++)
+  {
+    this->arrHand[i] = h.arrHand[i];
   }
 }
 
 // Assignment Opeartor
-Hand &Hand ::operator=(const Hand &h) {
-  int size = sizeof(h.arrDec) / sizeof(string);
-  for (int i = 0; i < size; i++) {
-    this->arrDec[i] = h.arrDec[i];
+Hand &Hand ::operator=(const Hand &h)
+{
+  int size = sizeof(h.arrHand) / sizeof(string);
+  for (int i = 0; i < size; i++)
+  {
+    this->arrHand[i] = h.arrHand[i];
   }
   return *this;
 }
 static int numCardsHand = 0;
-void Hand::displayHandCards() {
+void Hand::displayHandCards()
+{
   cout << "Hand object has Cards:" << endl;
-  for (int i = 0; i < numCardsHand; i++) {
-    cout << "\t" << i + 1 << " " << arrDec[i] << endl;
+  for (int i = 0; i < numCardsHand; i++)
+  {
+    cout << "\t" << i + 1 << " " << arrHand[i] << endl;
   }
 }
 
-void Hand::set_card(string s) {
-  arrDec[numCardsHand] = s;
+// Hand sets a cards to its array.
+void Hand::set_card(string s)
+{
+  arrHand[numCardsHand] = s;
   numCardsHand++;
 }
 
-void Hand::displayNumOfCards() {
+// Displays that cards hand.
+void Hand::displayNumOfCards()
+{
   cout << "Currently has " << numCardsHand << " cards." << endl;
 }
 
-void Hand::play(Deck *deck, string s, int index) {
+// This function member uses one of the cards that is in the hand and it returns to the deck.
+void Hand::play(Deck *deck, string s, int index)
+{
   cout << "Your card is: " << s << endl;
+
+  // This function member returns a card to the Deck.
   return_to_Deck(deck, s);
-  arrDec[index] = "";
-  for (int i = index; i < numCardsHand; i++) {
-    if (index == numCardsHand) {
+  arrHand[index] = "";
+
+  for (int i = index; i < numCardsHand; i++)
+  {
+    if (index == numCardsHand)
+    {
       numCardsHand--;
       return;
     }
-    arrDec[i] = arrDec[i + 1];
+    arrHand[i] = arrHand[i + 1];
   }
   numCardsHand--;
 }
 
-void Hand::return_to_Deck(Deck *deck, string s) {
+// Returns a card to the deck.
+void Hand::return_to_Deck(Deck *deck, string s)
+{
   cout << "Card  " << s << " return back to the deck." << endl;
 
-  deck->deckArr[dynamicDeckSize] = s;
+  deck->arrDeck[dynamicDeckSize] = s;
   dynamicDeckSize++;
 }
 
-void testCards() {
+// A free function to visualize methods and objects creation and checking its functionalities.
+void testCards()
+{
   Deck d;
 
   d.genDeck();
 
+  cout << endl;
   Hand h;
-  int v1 = rand() % 10;
-  for (int i = 0; i < v1; i++) {
+
+  srand((int)time(0));
+
+  int v1 = rand() % 10 + 1;
+  cout << "Hand will draw " << v1 << " times." << endl;
+  for (int i = 0; i < v1; i++)
+  {
     h.set_card(d.draw());
   }
-  // d.displayDeck(d.deckArr);
+  cout << endl;
 
-  h.displayHandCards();
-
-  // h.displayNumOfCards();
-  while (true) {
+  while (true)
+  {
+    if (numCardsHand == 0)
+    {
+      cout << "You do not have the card(s) in your hand. \n";
+      break;
+    }
+    h.displayHandCards();
     cout << "Which card do you want to play: " << endl;
+    cout << "Enter 0 to quit." << endl;
     int index;
     cin >> index;
-
-    h.play(&d, h.arrDec[index - 1], index - 1);
-    break;
+    if (index == 0)
+    {
+      cout << "You entered 0. \n";
+      break;
+    }
+    h.play(&d, h.arrHand[index - 1], index - 1);
   }
+
+  cout << endl;
   h.displayHandCards();
-  // d.displayDeck(d.deckArr);
+  cout << endl;
+  d.displayDeck(d.arrDeck);
 };

@@ -9,10 +9,9 @@
 using std::ostream;
 using std::string;
 using std::vector;
-const int sizeDeck = 30;
+const int sizeDeck = 25;
 class Card {
   class Deck;
-
 public:
   Card();
   ~Card();
@@ -71,7 +70,8 @@ public:
   void displayDeck(string arr[]);
 
   // The deck that will contain cards.
-  string deckArr[sizeDeck];
+  // This array is used as a pointer in CPP file.
+  string arrDeck[sizeDeck];
   vector<Card *> deck;
 };
 
@@ -91,11 +91,15 @@ public:
   friend ostream &operator<<(ostream &out, const Hand &Hand);
 
   void set_card(string);
+  
   void displayNumOfCards();
   void displayHandCards();
+  
   void play(Deck *deck, string s, int index);
   void return_to_Deck(Deck *deck, string s);
-  string arrDec[sizeDeck];
+
+  // This array is used as a pointer in CPP file.
+  string arrHand[sizeDeck];
 };
 
 void testCards();
