@@ -13,7 +13,7 @@ string testPlayers() {
 
     try{
         //player.territories exists
-        if (testPlayer1.territories != NULL)
+        if (testPlayer1.territory != NULL)
             returnStatement = returnStatement + "testPlayer1 has a list of territories";
         else{
             errorMessage = "testPlayer1 has no list of territories";
