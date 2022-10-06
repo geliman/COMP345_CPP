@@ -20,8 +20,8 @@ string testPlayers() {
             throw(errorMessage);
         }
         
-        //player.cards exists
-        if (testPlayer1.cards != NULL)
+        //player.hand exists
+        if (testPlayer1.hand != NULL)
             returnStatement = returnStatement + ", testPlayer1 has a list of cards";
         else{
             errorMessage = "testPlayer1 has no list of cards";
