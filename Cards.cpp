@@ -49,13 +49,12 @@ string *Card::getCard()
   return this->card_type;
 }
 
-class Deck;
 
-void Card::setCard(string s) { this->card_type = &s; }
-
-// void Card::play(Deck *d, Player *p) {
-//   // cout << "Player is using " << p -> hand.card_type << endl;
-// }
+// Setting a card to Card class manually.
+void Card::setCard(string s)
+{
+  this->card_type = &s;
+}
 
 // --------------------------------------------------------------------------------
 // Deck

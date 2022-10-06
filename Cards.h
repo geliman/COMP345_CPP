@@ -5,13 +5,14 @@
 #include <string>
 #include <vector>
 
-
 using std::ostream;
 using std::string;
 using std::vector;
+
+// Declaration of deck size, deck contains 25 cards.
 const int sizeDeck = 25;
-class Card {
-  class Deck;
+class Card
+{
 public:
   Card();
   ~Card();
@@ -25,28 +26,14 @@ public:
   // Stream insertion operator
   friend ostream &operator<<(ostream &out, const Card &Card);
 
-  // void play(Deck *deck);
+  // returns a card.
   string *getCard();
   void setCard(string s);
   string *card_type;
-
-  // Each card has a type from: bomb, reinforcement, blockade, airlift, and
-  // diplomacy.
-
-  // vector<string> type_card = {"Bomb", "Reinforcement", "Blockade", "Airlift",
-  //                             " Diplomacy"};
-
-  // Vector gives me a red line saying "
-  // Non-aggregate type 'vector<std::string>'(aka 'vector<basic_string<char,
-  // char_traits<char>, allocator<char> > >') cannot be initialized with an
-  // initializer list"
-  // Seems like a common problem for c++ 11.
-  // You can run the code with  =>      g++ -std=c++ <filename>
-  // Complies with no problem
 };
 
-class Deck : public Card {
-  Card *card;
+class Deck : public Card
+{
 
 public:
   string draw();
@@ -75,7 +62,8 @@ public:
   vector<Card *> deck;
 };
 
-class Hand : Deck {
+class Hand : Deck
+{
 
 public:
   Hand();
@@ -90,16 +78,25 @@ public:
   // Stream insertion operator
   friend ostream &operator<<(ostream &out, const Hand &Hand);
 
+  // Set a card to hand when draw happens.
   void set_card(string);
-  
+
+  // Display how many cards you have in hand
   void displayNumOfCards();
+
+  // Display cards that are in the hand.
   void displayHandCards();
-  
+
+  // Takes one of the cards in the hand and returns to the Deck.
   void play(Deck *deck, string s, int index);
+
+  // Returns a card to the Deck.
   void return_to_Deck(Deck *deck, string s);
 
   // This array is used as a pointer in CPP file.
   string arrHand[sizeDeck];
 };
 
+
+// A free function to visualize the functionality of the code.
 void testCards();
