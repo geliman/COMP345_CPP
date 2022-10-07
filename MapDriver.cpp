@@ -1,3 +1,5 @@
+#include"Map.h"
+
 
 #include <iostream>
 #include <fstream>
@@ -5,6 +7,10 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+
+
+
+
 using namespace std;
 
 int testLoadMaps() {
@@ -106,7 +112,11 @@ int testLoadMaps() {
 int main() {
     
     testLoadMaps();
-    cout << "Okay";
+
+    Map m;
+    
+    cout << "Okay ";
+    
     return 0;
 
 }
