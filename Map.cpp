@@ -7,22 +7,18 @@
 using std::cout;
 using std::vector;
 
-/// <summary>
-/// Map Class constructor
-/// </summary>
-Map::Map(){
-	int* t = new int(0);
-	int* c = new int(0);
-	string* n = new string("default");
-	nbTerr = t;
-	nbCont = c;
-	mapName = n;
+
+Map::Map() : nbTerr(new int(0)), nbCont(new int(0)),mapName(new string("default")){
+	cout << "Map created" << endl;
+};
+Map::Map(int* nbT, int* nbC, string* mapN) : nbTerr(nbT), nbCont(nbC), mapName(mapN)
+{
+	
 	cout << "Map created" << endl;
 };
 
-
 // copy constructor
-Map::Map(const Map& map) {
+Map::Map(const Map& map) : Map(map) {
 	this->nbTerr = new int(*(map.nbTerr));
 	this->nbCont = new int(*(map.nbCont));
 	this->mapName = new string(*(map.mapName));
@@ -30,6 +26,7 @@ Map::Map(const Map& map) {
 
 // assignment operator
 Map& Map::operator=(const Map& map) {
+	Map::operator=(map);
 	this->nbTerr = new int(*(map.nbTerr));
 	this->nbCont = new int(*(map.nbCont));
 	this->mapName = new string(*(map.mapName));
@@ -52,9 +49,10 @@ Map::~Map() {
 
 
 
-Map::getMapName() {
-	
-	return &this->mapName;
+void Map::setMapName(string* s) {
+	delete mapName;
+	mapName = s;
+
 }
 /// <summary>
 /// Territory inner class constructor

@@ -14,22 +14,17 @@ class Map
 public:
 
 
-	int* nbTerr;
-	int* nbCont;
-	string* mapName;
-
-
 	 // default constructor
 	Map() {};
-
+	Map(int *nbT, int *nbC, string *mapN){};
         // copy constructor
-	Map(const Map& map) {};
+	Map(const Map& map){};
 
         // assignment operator
-        Map& operator=(const Map& map);
+        Map& operator =(const Map& map);
 
         // stream insertion operator
-        friend ostream& operator<<(ostream& out, const Map& map);
+        friend ostream& operator <<(ostream& out, const Map& map);
 
         // Destructor
 		~Map() {};
@@ -100,11 +95,21 @@ public:
 	/*Continent getContinent(Continent continent) const;*/
 	int* getNbContinents();
 	int* getNbTerritories(Continent* continent);
-	string* getMapName();
+	void setMapName(string* input) {};
 	/*vector<string> getTerritories(Continent continent) const; */
 	
 
 	
 
 	static bool validateMap(); /* Safeguard here */
+
+
+	private:
+	int* nbTerr;
+	int* nbCont;
+	string* mapName;
+
+
+
+
 };

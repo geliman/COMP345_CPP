@@ -111,11 +111,18 @@ int testLoadMaps() {
 
 int main() {
     
-    testLoadMaps();
-
-    Map m;
     
-    cout << "Okay ";
+
+    int *a = new int(0);
+    int *b = new int(0);
+    string *c = new string("default");
+
+    
+   Map m(new int(0),new int(0),new string("default"));
+    Map m2 = m;
+    
+
+    cout << "Okay -> " << *c << " -> end" << endl;
     
     return 0;
 
