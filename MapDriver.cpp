@@ -1,5 +1,5 @@
 #include "Map.h"
-#include "Map.cpp"
+// #include "Map.cpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
