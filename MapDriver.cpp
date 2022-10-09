@@ -1,6 +1,5 @@
-#include"Map.h"
-
-
+#include "Map.h"
+#include "Map.cpp"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -13,7 +12,7 @@
 
 using namespace std;
 
-int testLoadMaps() {
+vector<vector<string>> parseMap() {
 
     string str;
     vector<vector<string>> arr_cont; /* [i][0]  -> continents ; [i][n] -> n > 0, Territoires d'un continent 'i' */
@@ -68,11 +67,11 @@ int testLoadMaps() {
         }
         for (int i = 0; i < arr_cont.size(); i++) {
 
-            cout << arr_cont.at(i).at(0) << endl;
-            cout << arr_cont.at(i).at(1) << endl << endl;
+            // cout << arr_cont.at(i).at(0) << endl;
+            // cout << arr_cont.at(i).at(1) << endl << endl;
             for (int j = 2; j < arr_cont.at(i).size(); j+=2) {
                 /* j = territory name; j+1 = territory properties */
-                cout << arr_cont.at(i).at(j) << endl;
+                // cout << arr_cont.at(i).at(j) << endl;
                 string delimiter3 = ",";
                 string name;
                 string coordX;
@@ -97,32 +96,47 @@ int testLoadMaps() {
                 cont.erase(remove(cont.begin(), cont.end(), ' '), cont.end());
                 
 
-                cout << coordX << ":" << coordY  << endl << "Continent : " << cont << endl << "Adjacent territories :" << props << endl << endl;
+                // cout << coordX << ":" << coordY  << endl << "Continent : " << cont << endl << "Adjacent territories :" << props << endl << endl;
             }
             
-            cout << "\n******************************" << endl;
+            // cout << "\n******************************" << endl;
         }
 
     }
     file.close();
-    return 0;
+    
+    return arr_cont;
 }
 
 
 int main() {
     
     
-
-    int *a = new int(0);
-    int *b = new int(0);
-    string *c = new string("default");
+    
+vector<vector<string>> v = parseMap();
 
     
-   Map m(new int(0),new int(0),new string("default"));
-    Map m2 = m;
+   Map m(v);
     
+   for (int i=0;i<m.continents->size()-1;i++){
+    string* s = new string(*m.continents->at(i).Cname);
+    int* s1 = new int(*m.continents->at(i).nbPts);
+    cout << "Continent name is : " << *s <<endl << "Number of points : " << *s1 <<endl << "Territories are : ";
+    
+    
+    cout << *m.continents->at(i).territories->at(0).Tname;
+    for (int j=1;j<m.continents->at(i).territories->size()-1;j++){
+        
+        cout << ", "<<  *m.continents->at(i).territories->at(j).Tname;
+    }
+        cout << "." << endl<< endl;
 
-    cout << "Okay -> " << *c << " -> end" << endl;
+    
+   }
+
+    cout << m << endl;
+    
+    m.~Map();
     
     return 0;
 

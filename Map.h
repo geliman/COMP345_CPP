@@ -15,10 +15,11 @@ public:
 
 
 	 // default constructor
-	Map() {};
-	Map(int *nbT, int *nbC, string *mapN){};
+	Map() ;
+	Map(int *nbT, int *nbC, string *mapN);
+	
         // copy constructor
-	Map(const Map& map){};
+	Map(const Map& map);
 
         // assignment operator
         Map& operator =(const Map& map);
@@ -27,15 +28,20 @@ public:
         friend ostream& operator <<(ostream& out, const Map& map);
 
         // Destructor
-		~Map() {};
+		~Map();
 
 
 		
+	
+
 
 	class Territory {
 	public:
 		// default constructor
 		Territory();
+
+		Territory(string* name, string* properties);	
+
 
 		// copy constructor
 		Territory(const Territory& territory);
@@ -49,25 +55,26 @@ public:
 		// Destructor
 		~Territory();
 
-		pair<int*, int*>* getCoord();
-		string* getOwner() ; /* must change to player*/
-		int* getNbArmies() ;
+		
+		string getOwner() ; /* must change to player*/
+		int getNbArmies() ;
 
-		vector<Territory*>* getAdjacentTerritories();
-		string* getName();
+		vector<string> getAdjacentTerritories();
+		string getName();
 
 		int* nbArmies;
 		string* owner;
 		string* Tname;
-
 		
-		vector<Territory*>* adjTerr;
+		vector<string>* adjTerr;
 	};
 
 	class Continent {
 	public:
 		// default constructor
 		Continent();
+
+		Continent(string* name, int* pts, vector<Territory>* list_terr);
 
 		// copy constructor
 		Continent(const Continent& continent);
@@ -81,35 +88,36 @@ public:
 		// Destructor
 		~Continent();
 
-		string* getName();
-		int* getNbPts();
+		string getName();
+		int getNbPts();
 
 
 		string* Cname;
 		int* nbPts;
-		vector<Territory*>* territories;
+		vector<Territory>* territories;
 	};
 	
 
-
-	/*Continent getContinent(Continent continent) const;*/
-	int* getNbContinents();
-	int* getNbTerritories(Continent* continent);
-	void setMapName(string* input) {};
-	/*vector<string> getTerritories(Continent continent) const; */
 	
 
+	Map(vector<vector<string>> fileName);	
+
+	/*Continent getContinent(Continent continent) const;*/
+	int getNbContinents();
+	Continent getContinent(int* index);
+	// void setMapName(string* input) {};
+	/*vector<string> getTerritories(Continent continent) const; */
+	
+	
 	
 
 	static bool validateMap(); /* Safeguard here */
 
 
-	private:
-	int* nbTerr;
-	int* nbCont;
+	int* nbContinents;
 	string* mapName;
-
-
+	vector<Continent>* continents;
+	
 
 
 };
