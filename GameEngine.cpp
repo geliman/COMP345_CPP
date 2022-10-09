@@ -31,7 +31,7 @@ ostream& operator<<(ostream& out, const GameEngine& GameEngine) {
 // destructor
 GameEngine::~GameEngine() {
   delete curr_state;
-  curr_state = nullptr;
+  curr_state = NULL;
 }
 
 
