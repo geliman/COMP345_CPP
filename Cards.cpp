@@ -1,27 +1,28 @@
 #include "Cards.h"
+
 /**
  *
  * @author Giwon Lee - 40160453
  * @date 2022.10.2 Tuesday
  *
  */
+
 #include <ctime>
 using std::cin;
 using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
+
 string arr[30];
 static int dynamicDeckSize = sizeDeck;
-
-/* -------------------------------------------------------------------------------- */
-// Card Class Implementation
 
 // Default Constructor
 Card::Card()
 {
   // cout << "Card object" << endl;
 }
+
 // Default Destructor
 Card::~Card() {}
 
@@ -49,15 +50,11 @@ string *Card::getCard()
   return this->card_type;
 }
 
-
 // Setting a card to Card class manually.
 void Card::setCard(string s)
 {
   this->card_type = &s;
 }
-
-// --------------------------------------------------------------------------------
-// Deck
 
 // Default Constructor
 Deck::Deck()
@@ -127,10 +124,10 @@ void Deck::genDeck()
     }
   }
 
+
   cout << "Deck is Generated." << endl;
 }
 
-// Displays whats in the Deck.
 void Deck::displayDeck(string arr[])
 {
   cout << "Deck has " << dynamicDeckSize << " cards:" << endl;
@@ -140,9 +137,6 @@ void Deck::displayDeck(string arr[])
   }
 }
 
-/* Card draws from the deck and returns the string.
- * Then the hand object uses this as setting its hand cards.
- */
 string Deck::draw()
 {
   if (dynamicDeckSize == 0)
@@ -166,22 +160,16 @@ string Deck::draw()
   return tempCard;
 }
 
-/* -------------------------------------------------------------------------------- */
-// Hand Class implementation.
-
-// Default Constructor
 Hand::Hand()
 {
   // cout << "Deck object" << endl;
 }
 
-// Default Destructor
 Hand::~Hand()
 {
   // Default Destructor
 }
 
-// Copy Constructor
 Hand::Hand(const Hand &h)
 {
   int size = sizeof(h.arrHand) / sizeof(string);
@@ -191,7 +179,6 @@ Hand::Hand(const Hand &h)
   }
 }
 
-// Assignment Opeartor
 Hand &Hand ::operator=(const Hand &h)
 {
   int size = sizeof(h.arrHand) / sizeof(string);
@@ -211,20 +198,17 @@ void Hand::displayHandCards()
   }
 }
 
-// Hand sets a cards to its array.
 void Hand::set_card(string s)
 {
   arrHand[numCardsHand] = s;
   numCardsHand++;
 }
 
-// Displays that cards hand.
 void Hand::displayNumOfCards()
 {
   cout << "Currently has " << numCardsHand << " cards." << endl;
 }
 
-// This function member uses one of the cards that is in the hand and it returns to the deck.
 void Hand::play(Deck *deck, string s, int index)
 {
   cout << "Your card is: " << s << endl;
@@ -254,7 +238,6 @@ void Hand::return_to_Deck(Deck *deck, string s)
   dynamicDeckSize++;
 }
 
-// A free function to visualize methods and objects creation and checking its functionalities.
 void testCards()
 {
   Deck d;
